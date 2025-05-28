@@ -1,0 +1,1 @@
+select W6WARE, W6LOCID, W6AREA from wm0006f

@@ -1,0 +1,63 @@
+WITH
+CombinedData as (
+
+SELECT 'BWL' as schemaName, rtrim(itemNumber) as itemNumber, [RDEL]
+      ,[RMFGR]
+      ,[RCOLOR]
+      ,[RPATT]
+      ,[RISHAD]
+      ,[RILOT#]
+      ,[RWARE#]
+      ,[RROLL#]
+      ,[RLOC1]
+      ,[RONHAN]
+      ,[RSCHED]
+      ,[RALLOC]
+      ,[RLASTC]
+      ,[RBASEC]
+      ,[RLRCTD]
+      ,[R#CUTS]
+      ,[RUM]
+      ,[RSHADE]
+      ,[RFILL1]
+      ,[RCODE@]
+      ,[RORIG]
+      ,[RHOLD]
+      ,[RLEN]
+      ,[RWID]
+      ,[R#PC]
+  FROM [dancik_bwl].[ROLLS]
+  where ronhan <> 0
+
+ UNION all
+
+ SELECT  'WAN' as schemaName, rtrim(itemNumber) as itemNumber, [RDEL]
+      ,[RMFGR]
+      ,[RCOLOR]
+      ,[RPATT]
+      ,[RISHAD]
+      ,[RILOT#]
+      ,[RWARE#]
+      ,[RROLL#]
+      ,[RLOC1]
+      ,[RONHAN]
+      ,[RSCHED]
+      ,[RALLOC]
+      ,[RLASTC]
+      ,[RBASEC]
+      ,[RLRCTD]
+      ,[R#CUTS]
+      ,[RUM]
+      ,[RSHADE]
+      ,[RFILL1]
+      ,[RCODE@]
+      ,[RORIG]
+      ,[RHOLD]
+      ,[RLEN]
+      ,[RWID]
+      ,[R#PC]
+  FROM [dancik_wan].[ROLLS]
+  where ronhan <> 0
+
+)
+select * from CombinedData
