@@ -26,11 +26,18 @@ class ConfigReader:
             config_dir = os.path.dirname(self.config_file)
             self.credentials_file = os.path.join(config_dir, credentials_filename)
 
-        # 3) Finally read credentials
-        if not os.path.exists(self.credentials_file):
-            raise FileNotFoundError(f"Credentials file not found at {self.credentials_file!r}")
+            # 3) If credentials file does not exist, defer error
+            if not os.path.exists(self.credentials_file):
+                self._credentials_missing = True
+            else:
+                self._load_credentials()
+
+    def _load_credentials(self):
+        """Load the credentials file."""
         self.credentials = configparser.ConfigParser()
         self.credentials.read(self.credentials_file)
+        self._credentials_missing = False
+
 
     @staticmethod
     def get_instance(config_file=None):
@@ -51,4 +58,10 @@ class ConfigReader:
         return self.config.get("DEFAULT", key, fallback=fallback)
 
     def get_connection(self, key: str, fallback=None):
+        if self._credentials_missing:
+            raise FileNotFoundError("Credentials file not yet set up.")
         return self.credentials.get("CREDENTIALS", key, fallback=fallback)
+
+    def get_config_directory(self):
+        """Return the directory containing the config file."""
+        return os.path.dirname(self.config_file)
