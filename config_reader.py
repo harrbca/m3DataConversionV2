@@ -4,6 +4,7 @@ import glob
 
 class ConfigReader:
     _instance = None
+    _credentials_missing = True
 
     def __init__(self, config_file=None, credentials_filename="credentials.ini"):
         if hasattr(self, "config"):
@@ -26,11 +27,11 @@ class ConfigReader:
             config_dir = os.path.dirname(self.config_file)
             self.credentials_file = os.path.join(config_dir, credentials_filename)
 
-            # 3) If credentials file does not exist, defer error
-            if not os.path.exists(self.credentials_file):
-                self._credentials_missing = True
-            else:
-                self._load_credentials()
+        # 3) If credentials file does not exist, defer error
+        if not os.path.exists(self.credentials_file):
+            self._credentials_missing = True
+        else:
+            self._load_credentials()
 
     def _load_credentials(self):
         """Load the credentials file."""
