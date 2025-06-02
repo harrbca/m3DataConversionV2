@@ -1,0 +1,44 @@
+API_CRS025MI_AddItemGroup:
+  transformers:
+    - transformers.item_group.ItemGroupTransformer
+  fields:
+    ITGR: get_item_group
+    TX40: get_item_group_description
+    TX15: get_item_group_name
+
+API_MMS235MI_AddItmLot:
+  transformers:
+    - custom.bwl.bwl_item_transformer.BWLItemTransformer
+    - transformers.item.ItemTransformer
+    - transformers.inventory.InventoryTransformer
+  fields:
+    ITNO: get_item_number
+    BANO: get_inventory_lot_number
+    FACI: get_facility
+    STAS: get_status_balance_id
+    ORCO: get_country_of_origin
+    REDA: get_inventory_last_receipt_date
+
+API_PCS265MI_Add:
+  transformers:
+    - custom.bwl.bwl_item_transformer.BWLItemTransformer
+    - transformers.item.ItemTransformer
+    - transformers.inventory.InventoryTransformer
+  fields:
+    FACI: get_facility
+    ITNO: get_item_number
+    BANO: get_inventory_lot_number
+    CSU1: get_weighted_cost
+
+API_MMS310MI_Update:
+    transformers:
+        - custom.bwl.bwl_item_transformer.BWLItemTransformer
+        - transformers.item.ItemTransformer
+        - transformers.inventory.InventoryTransformer
+    fields:
+        WHLO: get_inventory_warehouse
+        ITNO: get_item_number
+        WHSL: get_inventory_bin_location
+        BANO: get_inventory_lot_number
+        STQI: get_inventory_quantity
+        STAG: get_inventory_status

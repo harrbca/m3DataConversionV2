@@ -108,7 +108,7 @@ def save_to_sqlite(df, table, db_path, ask_confirm):
     Converts Decimal to str for compatibility.
     """
     # Convert decimals
-    df = df.applymap(lambda x: str(x) if isinstance(x, decimal.Decimal) else x)
+    df = df.apply(lambda col: col.map(lambda x: float(x) if isinstance(x, decimal.Decimal) else x))
 
     # Ensure DB directory exists
     os.makedirs(os.path.dirname(db_path), exist_ok=True)

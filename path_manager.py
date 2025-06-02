@@ -8,16 +8,16 @@ class PathManager:
         self.config = ConfigReader.get_instance()
         self.base_path = Path(self.config.get("PATHS", "base_path"))
 
-    def get_path(self, section, key, check_path=True):
-
+    def get_path(self, section, key, check_path=True, **format_kwargs):
         path = self.config.get(section, key)
         if path is None:
             return None
 
-        # Replace {timestamp} with current timestamp
-        if "{timestamp}" in path:
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            path = path.replace("{timestamp}", timestamp)
+        # Add timestamp and any format kwargs (like prefix)
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        path = path.replace("{timestamp}", timestamp)
+        for k, v in format_kwargs.items():
+            path = path.replace(f"{{{k}}}", v)
 
         full_path = self.base_path / path
         if check_path:
