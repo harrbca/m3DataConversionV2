@@ -42,3 +42,15 @@ API_MMS310MI_Update:
         BANO: get_inventory_lot_number
         STQI: get_inventory_quantity
         STAG: get_inventory_status
+
+API_OIS017MI_AddBasePrice:
+    transformers:
+        - custom.bwl.bwl_item_transformer.BWLItemTransformer
+        - transformers.item.ItemTransformer
+        - transformers.price.PriceTransformer
+    fields:
+        PRRF: get_price_list
+        CUCD: get_price_list_currency
+        FVDT: get_price_valid_from_date
+        ITNO: get_item_number
+        SAPR: get_sales_price

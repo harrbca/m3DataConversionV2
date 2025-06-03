@@ -4,7 +4,7 @@ import re
 class BWLItemTransformer(BaseTransformer):
 
     def get_item_number(self):
-        item_number = getattr(self.row, 'itemNumber', '').strip()
+        item_number = getattr(self.row, 'ITEMNUMBER', '').strip()
 
         if len(item_number) < 3:
             return item_number  # Return as is if item_number is too short
